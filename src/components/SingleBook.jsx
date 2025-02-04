@@ -1,6 +1,6 @@
 
 
-default function SingleBook() {
+function SingleBook() {
     return (
         <div>
             <h2>Single Book</h2>

@@ -20,18 +20,38 @@ export const fetchSingleBook = async (id) => {
 }
 };
 
-export const addUser = async (user, email, password) => {
+export async function userRegistration(userObj) {
     try{
-    const response = await fetch(`${API_URL}/users/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user, email , password),
-    });
-    const newUser = await response.json();
-    return newUser;
-} catch (error) {
-    console.error("Trouble adding User..." , error);
+        const response = await fetch(`${API_URL}/users/register`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userObj)
+        });
+        const result = await response.json();
+        return result.token;
+    } catch(error){
+        console.error(error);
+    }
 }
+
+export async function updateBook(token, bookId, availability) {
+    try {
+        const response = await fetch(`${API_URL}/books/${bookId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                available: `${availability}`,
+            })
+        });
+        const result = await response.json();
+        return result.book;
+
+    } catch(error) {
+        console.error(error)
+    }
 }

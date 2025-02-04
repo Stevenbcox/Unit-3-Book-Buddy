@@ -1,7 +1,7 @@
 /* TODO - add your code to create a functional React component that renders a registration form */
 import { useState } from 'react'
 
-default function Register() {
+function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
