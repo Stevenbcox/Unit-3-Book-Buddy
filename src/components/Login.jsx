@@ -15,7 +15,7 @@ function Login({setToken}) {
             const token = await userLogin({email, password});
             if (token) {
                 setToken(token);
-                navigate('/users/login');
+                navigate('/books'); // Navigate to a valid route
             } else {
                 setError('Invalid email or password');
             }
