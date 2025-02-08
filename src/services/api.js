@@ -62,8 +62,7 @@ export const fetchAccountDetails = async (token) => {
     try {
         const response = await fetch(`${API_URL}/users/me`, {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`
             },
         });
         if (!response.ok) {

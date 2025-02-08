@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import bookLogo from './assets/books.png';
+import './index.css';
 import Navigations from './components/Navigations';
 import Books from './components/Books';
 import SingleBook from './components/SingleBook';
