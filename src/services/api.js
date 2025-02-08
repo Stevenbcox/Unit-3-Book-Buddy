@@ -36,6 +36,20 @@ export async function userRegistration(userObj) {
     }
 }
 
+export const fetchAccountDetails = async (token) => {
+    try {
+        const response = await fetch(`${API_URL}/users/me`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const account = await response.json();
+        return account.data.user;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 export async function userLogin(userObj) {
     try {
         const response = await fetch(`${API_URL}/users/login`, {
