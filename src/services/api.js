@@ -56,23 +56,24 @@ export async function registerUser(userObj) {
 
 // src/services/api.js
 
+// src/services/api.js
+
 export const fetchAccountDetails = async (token) => {
     try {
         const response = await fetch(`${API_URL}/users/me`, {
             headers: {
-                'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`
-            }
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
         });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
-        if (!result.data || !result.data.user) {
-            throw new Error("Invalid response format");
-        }
-        return result.data.user;
+        console.log("API response:", result); // Log the response to debug
+        return result; // Return the result directly
     } catch (error) {
-        console.error("Unable to fetch account details:", error);
+        console.error("Unable to gather account info.", error);
         throw error;
     }
 };
