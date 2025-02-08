@@ -19,11 +19,15 @@ function SingleBook() {
         return <div>Loading...</div>;
     }
 
-    return (<div>
-        <h2>{book.title}</h2>
-        <p>{book.author}</p>
-        <p>{book.description}</p>
-    </div>);
+    return (
+        <div>
+            <h2>{book.title}</h2>
+            <p><strong>Author:</strong> {book.author}</p>
+            <p><strong>Description:</strong> {book.description}</p>
+            <img src={book.coverimage} alt={`${book.title} cover`}/>
+            <p><strong>Available:</strong> {book.available ? 'Yes' : 'No'}</p>
+        </div>
+    );
 }
 
 export default SingleBook;
