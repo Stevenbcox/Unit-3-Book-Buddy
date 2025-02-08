@@ -1,39 +1,51 @@
-/* TODO - add your code to create a functional React component that renders a registration form */
-import {useState} from 'react'
-import {userRegistration} from '../services/api.js'
-import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import {registerUser} from "../services/api";
 
 function Register({setToken}) {
-    const [register, setRegister] = useState({
-        firstname: '', lastname: '', email: '', password: ''
-    })
+    const [userFirstName, setUserFirstName] = useState('');
+    const [userLastName, setUserLastName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userPassword, setUserPassword] = useState('');
+    const [error, setError] = useState(null);
 
-    const navigate = useNavigate();
-
-    function handleChange(e) {
-        const {name, value} = e.target;
-        setRegister((prevData) => ({...prevData, [name]: value}))
+    async function handleSubmit(event) {
+        event.preventDefault();
+        try {
+            const token = await registerUser({
+                firstname: userFirstName, lastname: userLastName, email: userEmail, password: userPassword
+            });
+            setError(null);
+            setToken(token);
+        } catch (error) {
+            setError(error.message);
+        }
     }
 
-
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setToken(await userRegistration(register))
-        navigate('/')
-    }
-
-    return (<form onSubmit={handleSubmit}>
-        <label> First name: <input required name="firstname" value={register.firstname} type="text"
-                                   onChange={handleChange}/></label>
-        <label> Last Name: <input required name="lastname" value={register.lastname} type="text"
-                                  onChange={handleChange}/></label>
-        <label> Email: <input required name="email" value={register.email} type="text"
-                              onChange={handleChange}/></label>
-        <label> Password: <input required name="password" value={register.password} type="text"
-                                 onChange={handleChange}/></label>
-        <button type="submit">submit</button>
-    </form>)
+    return (<>
+        <h2>Register for a Library Account</h2>
+        {error && <p className='submission_error'>{error}</p>}
+        <form onSubmit={handleSubmit}>
+            <label className='first_name_form'>
+                First Name:
+                <input type='text' value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)}/>
+            </label>
+            <label className='last_name_form'>
+                Last Name:
+                <input type='text' value={userLastName} onChange={(e) => setUserLastName(e.target.value)}/>
+            </label>
+            <label className='email_form'>
+                Email:
+                <input type='text' value={userEmail} onChange={(e) => setUserEmail(e.target.value)}/>
+            </label>
+            <label className='password_form'>
+                Password:
+                <input type='password' value={userPassword} onChange={(e) => setUserPassword(e.target.value)}/>
+            </label>
+            <label className='submit_button'>
+                <button>Submit</button>
+            </label>
+        </form>
+    </>);
 }
 
-export default Register
-
+export default Register;

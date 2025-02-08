@@ -1,52 +1,64 @@
-/* TODO - add your code to create a functional React component that renders a login form */
-
 import {useState} from 'react';
+import {useNavigate, Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {userLogin} from '../services/api';
-import {useNavigate} from 'react-router-dom';
 
 function Login({setToken}) {
-    const [login, setLogin] = useState({email: '', password: ''});
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    function handleChange(e) {
-        const {name, value} = e.target;
-        setLogin((prevData) => ({...prevData, [name]: value}));
-    }
-
-    async function handleSubmit(e) {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = await userLogin(login);
-        if (token) {
-            setToken(token);
-            navigate('/');
-        } else {
-            console.error('Login failed');
+        try {
+            const token = await userLogin({email, password});
+            if (token) {
+                setToken(token);
+                navigate('/users/login');
+            } else {
+                setError('Invalid email or password');
+            }
+        } catch (err) {
+            setError(err.message || 'An error occurred during login');
+            console.error("Login failed:", err);
         }
-    }
+    };
 
-    return (<form onSubmit={handleSubmit}>
-        <label>
-            Email:
-            <input
-                required
-                name="email"
-                value={login.email}
-                type="email"
-                onChange={handleChange}
-            />
-        </label>
-        <label>
-            Password:
-            <input
-                required
-                name="password"
-                value={login.password}
-                type="password"
-                onChange={handleChange}
-            />
-        </label>
-        <button type="submit">Login</button>
-    </form>);
+    return (
+        <div>
+            <h2>Login</h2>
+            {error && <p style={{color: 'red'}}>{error}</p>}
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don&apos;t have an account? <Link to="/register">Register here</Link></p>
+        </div>
+    );
 }
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired,
+};
 
 export default Login;

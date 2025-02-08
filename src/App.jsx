@@ -24,7 +24,7 @@ function App() {
                     <Route path='/register' element={<Register setToken={setToken}/>}/>
                     <Route path='/books' element={<Books/>}/>
                     <Route path='/books/:bookid' element={<SingleBook/>}/>
-                    <Route path='/my-account' element={<Account token={token}/>}/>
+                    <Route path='/my-account' element={<Account token={token} setToken={setToken}/>}/>
                 </Routes>
             </div>
         </Router>
