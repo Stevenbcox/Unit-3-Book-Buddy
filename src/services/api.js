@@ -38,11 +38,9 @@ export const fetchSingleBook = async (bookId) => {
 export async function registerUser(userObj) {
     try {
         const response = await fetch(`${API_URL}/users/register`, {
-            method: 'POST',
-            headers: {
+            method: 'POST', headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userObj),
+            }, body: JSON.stringify(userObj),
         });
         if (!response.ok) {
             const errorData = await response.json();
@@ -62,8 +60,7 @@ export const fetchAccountDetails = async (token) => {
     try {
         const response = await fetch(`${API_URL}/users/me`, {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`
             }
         });
         if (!response.ok) {
@@ -90,11 +87,9 @@ export async function userLogin(userObj) {
 
     try {
         const response = await fetch(`${API_URL}/users/login`, {
-            method: "POST",
-            headers: {
+            method: "POST", headers: {
                 'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userObj)
+            }, body: JSON.stringify(userObj)
         });
         if (!response.ok) {
             const errorData = await response.json();

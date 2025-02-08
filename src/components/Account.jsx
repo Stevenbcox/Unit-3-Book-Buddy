@@ -28,20 +28,17 @@ function Account({token, setToken}) {
         return <div>Loading...</div>;
     }
 
-    return (
-        <div>
-            <h2>Account Details</h2>
-            <p><strong>First Name:</strong> {account.firstname}</p>
-            <p><strong>Last Name:</strong> {account.lastname}</p>
-            <p><strong>Email:</strong> {account.email}</p>
-            <button onClick={handleLogout}>Log Out</button>
-        </div>
-    );
+    return (<div>
+        <h2>Account Details</h2>
+        <p><strong>First Name:</strong> {account.firstname}</p>
+        <p><strong>Last Name:</strong> {account.lastname}</p>
+        <p><strong>Email:</strong> {account.email}</p>
+        <button onClick={handleLogout}>Log Out</button>
+    </div>);
 }
 
 Account.propTypes = {
-    token: PropTypes.string,
-    setToken: PropTypes.func.isRequired,
+    token: PropTypes.string, setToken: PropTypes.func.isRequired,
 };
 
 export default Account;
